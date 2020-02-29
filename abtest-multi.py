@@ -5,6 +5,13 @@ from scipy import stats as st
 import numpy as np
 
 #%%
+x=np.linspace(-3,3,200)
+plt.plot(x,st.t(1).pdf(x),linestyle="--",label="t(1)")
+plt.plot(x,st.t(5).pdf(x),linestyle="dotted",label="t(5)")
+plt.plot(x,st.norm.pdf(x), label="Normal(0,1)")
+plt.legend()
+plt.savefig("../assaeunji.github.io/images/tdist.png")
+#%%
 n  = 1000
 x1 = 10
 x2 = 46
@@ -90,4 +97,3 @@ plt.title("Posterior Distribution of Difference of E[$R_B$]-E[$R_A$]")
 print((ER_B-ER_A).mean().round(3)) #1.168
 
 
-# %%
