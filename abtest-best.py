@@ -37,3 +37,31 @@ mcmc = pm.MCMC([obs_A,obs_B,mu_A,mu_B,std_A,std_B,nu_minus_1])
 mcmc.sample(25000,10000)
 
 # %%
+mu_A_trace = mcmc.trace("mu_A")[:]
+mu_B_trace = mcmc.trace("mu_B")[:]
+std_A_trace = mcmc.trace("std_A")[:]
+std_B_trace = mcmc.trace("std_B")[:] #[:]: trace object => ndarray
+nu_trace    = mcmc.trace("nu-1")[:]+1
+
+# %%
+def _hist(data,label,**kwargs):
+    return plt.hist(data,bins=40,histtype="stepfilled",alpha=.95,label=label, **kwargs)
+
+ax = plt.subplot(3,1,1)
+_hist(mu_A_trace,"A")
+_hist(mu_B_trace,"B")
+plt.legend ()
+plt.title("Posterior distributions of $\mu$")
+
+ax=plt.subplot (3,1,2)
+_hist(std_A_trace,"A")
+_hist(std_B_trace,"B")
+plt.legend ()
+plt.title("Posterior distributions of $\sigma$")
+
+ax=plt.subplot (3,1,3)
+_hist(nu_trace,"",color="#7A68A6")
+plt.title(r"Posterior distributions of $\nu$")
+plt.xlabel("Value")
+plt.ylabel("Density")
+plt.tight_layout()
